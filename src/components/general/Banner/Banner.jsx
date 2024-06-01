@@ -11,7 +11,7 @@ import slide4 from "../../../assets/images/slide4.jpg";
 
 const Banner = () => {
   return (
-    <div className="flex flex-col lg:flex-row gap-10 justify-between items-center bg-[#4db2ec15] rounded-xl px-[3.2rem] sm:px-[4.875rem] lg:px-[4.2rem] xl:px-[4.875rem] py-[4rem] sm:py-[5.6rem] sm:mt-4">
+    <div className="flex flex-col lg:flex-row gap-10 justify-evenly items-center bg-[#4db2ec15] rounded-xl px-[3.2rem] sm:px-[4.875rem] lg:px-[4.2rem] xl:px-[4.875rem] py-[4rem] sm:py-[5.6rem] sm:mt-4">
       <div className="text-center lg:text-left w-full lg:w-auto">
         <h1 className="text-[3rem] sm:text-[3.45rem] lg:text-[3.4rem] xl:text-[3.65rem] leading-[3.7rem] sm:leading-[4.5rem] font-bold mt-4">
           Start Booking <br />
