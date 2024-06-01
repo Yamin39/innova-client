@@ -1,7 +1,70 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import registerImg from "../../assets/images/register.jpeg";
+import useAlert from "../../hooks/useAlert";
+import useAuth from "../../hooks/useAuth";
 
 const Register = () => {
+  const { createUser, updateUserNameImg, setLoading } = useAuth();
+  const { successAlert, errorAlert } = useAlert();
+  const navigate = useNavigate();
+
+  const handleRegister = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const name = form.name.value;
+    const photoUrl = form.photoUrl.value;
+    const email = form.email.value;
+    const password = form.password.value;
+
+    // email verification
+    if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
+      errorAlert("Invalid email address");
+      return;
+    }
+
+    // pass verification
+    if (!/[A-Z]/.test(password)) {
+      errorAlert("Password should contain at least an Uppercase letter");
+      return;
+    }
+
+    if (!/[a-z]/.test(password)) {
+      errorAlert("Password should contain at least a Lowercase letter");
+      return;
+    }
+
+    if (password.length < 6) {
+      errorAlert("Password Length must be at least 6 character");
+      return;
+    }
+
+    // register
+    createUser(email, password)
+      .then((res) => {
+        console.log(res.user);
+        updateUserNameImg(res.user, name, photoUrl)
+          .then((result) => {
+            console.log(result);
+            successAlert("Registration Successful");
+            navigate("/");
+          })
+          .catch((error) => {
+            console.error(error);
+            errorAlert(error.message);
+          });
+      })
+      .catch((err) => {
+        const error = err.message;
+        console.error(error);
+        if (/email-already-in-use/.test(error)) {
+          errorAlert("Email already in use");
+        } else {
+          errorAlert(error);
+        }
+        setLoading(false);
+      });
+  };
+
   return (
     <div className="flex flex-col lg:flex-row-reverse justify-evenly items-center">
       <div className="hidden md:block max-w-[45%] min-w-[20.5rem]">
@@ -9,7 +72,7 @@ const Register = () => {
       </div>
 
       <div>
-        <form className="w-96">
+        <form onSubmit={handleRegister} className="w-96">
           <div className="text-center mb-6">
             <h1 className="text-[3rem] sm:text-[3.45rem] lg:text-5xl font-bold mt-4">Register</h1>
             <p className="text-gray-500 mt-2">Create an account</p>
