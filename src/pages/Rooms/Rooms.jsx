@@ -14,7 +14,14 @@ const Rooms = () => {
     });
   }, []);
 
-
+  const handleFilter = (e) => {
+    const range_query = e.target.value;
+    setLoader(true);
+    axiosSecure.get(`/filter?${range_query}`).then((data) => {
+      setRooms(data.data);
+      setLoader(false);
+    });
+  };
   return (
     <div className="mb-24">
       <div className="text-center mb-6">
@@ -22,7 +29,17 @@ const Rooms = () => {
         <p className="sm:max-w-[25rem] mx-auto text-gray-500 mt-2">Discover a variety of rooms tailored to every need and preference.</p>
       </div>
 
-
+      <div className="mt-4 text-center">
+        <select onChange={handleFilter} name="price_range" className="select select-bordered">
+          <option disabled selected>
+            Filter by price range
+          </option>
+          <option value={"gte=0&lte=100"}>0 - 100</option>
+          <option value={"gte=101&lte=200"}>101 - 200</option>
+          <option value={"gte=201&lte=300"}>201 - 300</option>
+          <option value={"gte=301&lte=500"}>301 - 500</option>
+        </select>
+      </div>
 
       <div className="pt-10">
         {loader ? (
