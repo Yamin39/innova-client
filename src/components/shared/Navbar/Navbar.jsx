@@ -69,15 +69,15 @@ const Navbar = () => {
                 <div className="flex gap-3 justify-center items-center">
                   <div className="dropdown dropdown-bottom dropdown-end">
                     <div tabIndex={0} role="button" className="bg-slate-200 rounded-full cursor-pointer">
-                      <img className="size-8 2xl:size-10 rounded-full object-cover" src={user.photoURL} alt="User" />
+                      <img className="size-8 2xl:size-10 rounded-full object-cover" src={user?.photoURL} alt="User" />
                     </div>
                     <ul tabIndex={0} className="dropdown-content w-fit z-[1] menu p-4 shadow bg-base-100 rounded-box">
                       <div>
                         <p className="text-gray-500 mt-2" title="User name">
-                          {user.displayName || "Name not found!"}
+                          {user?.displayName || "Name not found!"}
                         </p>
                         <p className="text-gray-500 mt-2" title="User email">
-                          {user.email || "Email not found!"}
+                          {user?.email || "Email not found!"}
                         </p>
                       </div>
                     </ul>

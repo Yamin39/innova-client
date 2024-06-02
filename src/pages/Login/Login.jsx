@@ -1,8 +1,63 @@
+import { useState } from "react";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import loginImg from "../../assets/images/login.jpg";
+import useAlert from "../../hooks/useAlert";
+import useAuth from "../../hooks/useAuth";
 
 const Login = () => {
+  const [passToggle, setPassToggle] = useState(false);
+  const { successAlert, errorAlert } = useAlert();
+  const { logIn, googleLogin } = useAuth();
+  const navigate = useNavigate();
+
+  // google login
+  const handleGoogleLogin = () => {
+    googleLogin()
+      .then((res) => {
+        console.log(res.user);
+        successAlert("Login Successful");
+        navigate("/");
+      })
+      .catch((err) => console.log(err));
+  };
+
+  // login with email and password
+  const handleLogin = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
+
+    // email verification
+    if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
+      errorAlert("Invalid email address");
+      return;
+    }
+
+    // password verification
+    if (password.length < 6) {
+      errorAlert("Password Length must be at least 6 characters");
+      return;
+    }
+
+    // login
+    logIn(email, password)
+      .then((res) => {
+        console.log(res.user);
+        successAlert("Login Successful");
+        navigate("/");
+      })
+      .catch((err) => {
+        console.error(err);
+        if (/invalid-credential/.test(err.message)) {
+          errorAlert("Email or Password is wrong");
+        } else {
+          errorAlert(err.message);
+        }
+      });
+  };
   return (
     <div className="flex flex-col lg:flex-row justify-evenly items-center">
       <div className="hidden md:block max-w-[40%] min-w-[20.5rem]">
@@ -10,7 +65,7 @@ const Login = () => {
       </div>
 
       <div>
-        <form className="w-96">
+        <form onSubmit={handleLogin} className="w-96">
           <div className="text-center mb-6">
             <h1 className="text-[3rem] sm:text-[3.45rem] lg:text-5xl font-bold mt-4">Login</h1>
             <p className="text-gray-500 mt-2">Login to access your account</p>
@@ -37,7 +92,7 @@ const Login = () => {
           {/* password */}
           <div className="relative z-0 w-full mb-5 group">
             <input
-              type="password"
+              type={passToggle ? "text" : "password"}
               name="password"
               id="password"
               className="block py-2.5 px-0 w-full bg-transparent border-0 border-b-2 border-gray-400 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
@@ -50,6 +105,9 @@ const Login = () => {
             >
               Password
             </label>
+            <div onClick={() => setPassToggle(!passToggle)} className="absolute top-0 right-3 translate-y-1/2 text-[1.4rem] cursor-pointer">
+              {passToggle ? <FaRegEyeSlash /> : <FaRegEye />}
+            </div>
           </div>
 
           <button type="submit" className="btn w-full bg-primary-color text-white hover:bg-black h-auto min-h-0 text-base rounded-md py-2 xl:px-7 mt-2">
@@ -63,7 +121,10 @@ const Login = () => {
           <hr className="flex-1 border-b border-b-slate-400" />
         </div>
 
-        <button className="btn btn-outline w-full border-2 border-primary-color h-auto min-h-0 text-base rounded-md py-2 xl:px-7 mt-2">
+        <button
+          onClick={handleGoogleLogin}
+          className="btn btn-outline w-full border-2 border-primary-color h-auto min-h-0 text-base rounded-md py-2 xl:px-7 mt-2"
+        >
           <FcGoogle />
           Google
         </button>
