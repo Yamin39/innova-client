@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import useAlert from "../../../hooks/useAlert";
+import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const RoomDetails = () => {
@@ -7,15 +9,56 @@ const RoomDetails = () => {
   const [roomDetails, setRoomDetails] = useState([]);
   const [loader, setLoader] = useState(true);
   const axiosSecure = useAxiosSecure();
+  const [date, setDate] = useState("");
+  const { user } = useAuth();
+  const { successAlert } = useAlert();
 
-  useEffect(() => {
+  const getData = () => {
+    setLoader(true);
     axiosSecure(`/room-details/${id}`).then((data) => {
       setRoomDetails(data.data);
       setLoader(false);
     });
+  };
+
+  useEffect(() => {
+    getData();
   }, []);
 
   const { room_name, room_description, price_per_night, room_size, availability, room_image, special_offers, reviews } = roomDetails;
+  const handleConfirmBooking = (e) => {
+    e.preventDefault();
+    const selectedDate = e.target.date.value;
+    setDate(selectedDate);
+    document.getElementById("my_modal_1").showModal();
+  };
+
+  const handleBooking = () => {
+    const order = {
+      customerName: user.displayName,
+      email: user.email,
+      date,
+      room_image,
+      room_name,
+      room_id: id,
+      price: price_per_night,
+    };
+
+    console.log(order);
+
+    axiosSecure.post("/bookings", order).then((data) => {
+      console.log(data?.data);
+      if (data?.data?.insertedId) {
+        axiosSecure.patch(`/rooms/${id}`, { availability: false }).then((data) => {
+          console.log(data.data);
+          if (data.data.modifiedCount) {
+            successAlert("Room Booked Successfully");
+            getData();
+          }
+        });
+      }
+    });
+  };
   return (
     <div className="pb-24">
       <div className="text-center pb-14">
@@ -42,7 +85,8 @@ const RoomDetails = () => {
                     <span className="font-semibold text-lg">Room size:</span> {room_size}
                   </li>
                   <li>
-                    <span className="font-semibold text-lg">Status:</span> {availability ? "Available" : "Unavailable"}
+                    <span className="font-semibold text-lg">Status:</span>{" "}
+                    <span className={`${availability ? "text-black" : "text-red-600"}`}>{availability ? "Available" : "Unavailable"}</span>
                   </li>
                 </ul>
               </div>
@@ -52,7 +96,53 @@ const RoomDetails = () => {
                 <p className="font-semibold text-lg">{special_offers ? special_offers : "No offers are available for this room."}</p>
               </div>
 
-              <button className="btn bg-primary-color text-white hover:bg-black h-auto min-h-0 text-base rounded-md py-2 xl:px-7 mt-4">Book Now</button>
+              <div className="mt-4 w-fit border border-gray-500 rounded-lg p-4">
+                {availability ? (
+                  <form onSubmit={handleConfirmBooking} className="flex items-center gap-4">
+                    <div>
+                      <input required type="date" name="date" className="input input-bordered w-full" />
+                    </div>
+
+                    <button className="btn bg-primary-color text-white hover:bg-black h-auto min-h-0 text-base rounded-md py-2 xl:px-7">Book Now</button>
+                  </form>
+                ) : (
+                  <p className="font-semibold text-lg">This room is booked</p>
+                )}
+              </div>
+
+              <dialog id="my_modal_1" className="modal">
+                <div className="modal-box">
+                  <div className="card">
+                    <figure className="px-3 pt-3">
+                      <img src={room_image} alt={room_name} className="rounded-xl" />
+                    </figure>
+                    <div className="card-body">
+                      <h1 className="text-2xl font-semibold">{room_name}</h1>
+                      <p>{room_description}</p>
+                      <ul className="mt-1">
+                        <li>
+                          <span className="font-semibold text-lg">Price:</span> ${price_per_night}
+                        </li>
+                        <li>
+                          <span className="font-semibold text-lg">Booked Date:</span> {date}
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div className="modal-action flex justify-evenly mt-0 mx-3 mb-2">
+                    <form method="dialog" className="flex-grow">
+                      <button className="btn btn-error w-full btn-outline">Cancel</button>
+                    </form>
+                    <button
+                      onClick={handleBooking}
+                      className="btn flex-grow bg-primary-color text-white hover:bg-black h-auto min-h-0 text-base rounded-md py-2 xl:px-7"
+                    >
+                      Confirm
+                    </button>
+                  </div>
+                </div>
+              </dialog>
             </div>
             <div className="w-full lg:w-[52%] xl:flex-1">
               <img className="rounded size-full object-cover" src={room_image} alt={room_name} />
