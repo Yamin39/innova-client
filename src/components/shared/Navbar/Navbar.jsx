@@ -67,9 +67,21 @@ const Navbar = () => {
             <div>
               {user ? (
                 <div className="flex gap-3 justify-center items-center">
-                  <a className="bg-gray-300 rounded-full cursor-pointer">
-                    <img className="size-8 2xl:size-10 rounded-full object-cover" src={user.photoURL} alt="User" />
-                  </a>
+                  <div className="dropdown dropdown-bottom dropdown-end">
+                    <div tabIndex={0} role="button" className="bg-slate-200 rounded-full cursor-pointer">
+                      <img className="size-8 2xl:size-10 rounded-full object-cover" src={user.photoURL} alt="User" />
+                    </div>
+                    <ul tabIndex={0} className="dropdown-content w-fit z-[1] menu p-4 shadow bg-base-100 rounded-box">
+                      <div>
+                        <p className="text-gray-500 mt-2" title="User name">
+                          {user.displayName || "Name not found!"}
+                        </p>
+                        <p className="text-gray-500 mt-2" title="User email">
+                          {user.email || "Email not found!"}
+                        </p>
+                      </div>
+                    </ul>
+                  </div>
                   <button
                     onClick={handleLogOut}
                     className="btn h-auto min-h-0 btn-error rounded-md text-xs 2xl:text-base bg-secondary-color text-white py-2 xl:px-7  hover:bg-red-600"

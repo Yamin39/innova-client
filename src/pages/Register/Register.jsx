@@ -1,12 +1,15 @@
+import { useState } from "react";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
 import { Link, useNavigate } from "react-router-dom";
 import registerImg from "../../assets/images/register.jpeg";
 import useAlert from "../../hooks/useAlert";
 import useAuth from "../../hooks/useAuth";
 
 const Register = () => {
-  const { createUser, updateUserNameImg, setLoading } = useAuth();
+  const { createUser, updateUserNameImg, setLoading, loader, setLoader } = useAuth();
   const { successAlert, errorAlert } = useAlert();
   const navigate = useNavigate();
+  const [passToggle, setPassToggle] = useState(false);
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -45,6 +48,7 @@ const Register = () => {
         updateUserNameImg(res.user, name, photoUrl)
           .then((result) => {
             console.log(result);
+            setLoader(!loader);
             successAlert("Registration Successful");
             navigate("/");
           })
@@ -135,7 +139,7 @@ const Register = () => {
           {/* password */}
           <div className="relative z-0 w-full mb-5 group">
             <input
-              type="password"
+              type={passToggle ? "text" : "password"}
               name="password"
               id="password"
               className="block py-2.5 px-0 w-full bg-transparent border-0 border-b-2 border-gray-400 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
@@ -148,6 +152,9 @@ const Register = () => {
             >
               Password
             </label>
+            <div onClick={() => setPassToggle(!passToggle)} className="absolute top-0 right-3 translate-y-1/2 text-[1.4rem] cursor-pointer">
+              {passToggle ? <FaRegEyeSlash /> : <FaRegEye />}
+            </div>
           </div>
 
           <button type="submit" className="btn w-full bg-primary-color text-white hover:bg-black h-auto min-h-0 text-base rounded-md py-2 xl:px-7 mt-2">
