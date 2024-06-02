@@ -1,14 +1,15 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import FeaturedRoomsCard from "../FeaturedRoomsCard/FeaturedRoomsCard";
 
 const FeaturedRooms = () => {
   const [rooms, setRooms] = useState([]);
   const [loader, setLoader] = useState(true);
+  const axiosSecure = useAxiosSecure();
 
   useEffect(() => {
-    axios.get("http://localhost:5000/rooms").then((data) => {
-      setRooms(data.data);
+    axiosSecure.get("/rooms").then((data) => {
+      setRooms(data?.data);
       setLoader(false);
     });
   }, []);
