@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import FeaturedRoomsCard from "../FeaturedRoomsCard/FeaturedRoomsCard";
 
@@ -25,11 +26,18 @@ const FeaturedRooms = () => {
             <span className="loading loading-spinner loading-lg"></span>
           </div>
         ) : (
-          <div className="grid gap-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-            {rooms.slice(0, 6).map((room) => (
-              <FeaturedRoomsCard key={room._id} room={room}></FeaturedRoomsCard>
-            ))}
-          </div>
+          <>
+            <div className="grid gap-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+              {rooms.slice(0, 6).map((room) => (
+                <FeaturedRoomsCard key={room._id} room={room}></FeaturedRoomsCard>
+              ))}
+            </div>
+            <div className="mt-10 flex justify-center">
+              <Link to="/rooms" className="btn btn-neutral text-white px-7 rounded-full">
+                See all
+              </Link>
+            </div>
+          </>
         )}
       </div>
     </div>
