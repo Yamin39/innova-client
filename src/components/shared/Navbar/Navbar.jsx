@@ -1,7 +1,23 @@
 import { Link, NavLink } from "react-router-dom";
+import useAlert from "../../../hooks/useAlert";
+import useAuth from "../../../hooks/useAuth";
 import "./Navbar.css";
 
 const Navbar = () => {
+  const { user, loading, logOut } = useAuth();
+  const { successAlert } = useAlert();
+
+  const handleLogOut = () => {
+    logOut()
+      .then((res) => {
+        console.log(res);
+        successAlert("Log out Successful");
+      })
+      .then((err) => {
+        console.log(err);
+      });
+  };
+
   const links = (
     <>
       <li>
@@ -45,12 +61,31 @@ const Navbar = () => {
           <div className="hidden md:flex">
             <ul className="navLink-container menu menu-horizontal gap-1 2xl:gap-2 2xl:px-1 font-medium text-base">{links}</ul>
           </div>
-
-          <div className="nav-right">
-            <NavLink to="/login" className="btn bg-primary-color text-white hover:bg-black h-auto min-h-0 text-base rounded-md py-2 xl:px-7">
-              Login
-            </NavLink>
-          </div>
+          {loading ? (
+            <span className="loading loading-spinner"></span>
+          ) : (
+            <div>
+              {user ? (
+                <div className="flex gap-3 justify-center items-center">
+                  <a className="bg-gray-300 rounded-full cursor-pointer">
+                    <img className="size-8 2xl:size-10 rounded-full object-cover" src={user.photoURL} alt="User" />
+                  </a>
+                  <button
+                    onClick={handleLogOut}
+                    className="btn h-auto min-h-0 btn-error rounded-md text-xs 2xl:text-base bg-secondary-color text-white py-2 xl:px-7  hover:bg-red-600"
+                  >
+                    Logout
+                  </button>
+                </div>
+              ) : (
+                <div className="nav-right">
+                  <NavLink to="/login" className="btn bg-primary-color text-white hover:bg-black h-auto min-h-0 text-base rounded-md py-2 xl:px-7">
+                    Login
+                  </NavLink>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </nav>
