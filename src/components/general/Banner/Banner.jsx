@@ -17,7 +17,7 @@ const Banner = () => {
           Start Booking <br />
           with <span className="text-primary-color">Innova</span>
         </h1>
-        <p className="max-w-[18.125rem] mx-auto lg:mx-0 text-lg leading-8 mt-2">Find and book the best hotel in every place this world.</p>
+        <p className="max-w-[18.125rem] mx-auto lg:mx-0 text-lg leading-8 mt-2">Discover innovative stays and seamless bookings for your perfect getaway.</p>
         <Link to="/rooms" className="btn bg-primary-color text-white hover:bg-black h-auto min-h-0 text-base rounded-md py-2 xl:px-7 mt-4">
           Explore
         </Link>
