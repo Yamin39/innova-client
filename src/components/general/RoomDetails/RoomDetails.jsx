@@ -53,6 +53,7 @@ const RoomDetails = () => {
       room_name,
       room_id: id,
       price: price_per_night,
+      reviewGiven: false,
     };
 
     console.log(order);
