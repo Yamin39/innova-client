@@ -1,4 +1,7 @@
 import PropTypes from "prop-types";
+import { useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { FaRegStar } from "react-icons/fa6";
 import { MdOutlineEditCalendar } from "react-icons/md";
@@ -10,18 +13,25 @@ const BookingsTableRow = ({ myBooking, getData }) => {
   const { _id, room_id, room_name, price, date } = myBooking;
   const axiosSecure = useAxiosSecure();
   const { successAlert, errorAlert } = useAlert();
+  const [startDate, setStartDate] = useState(new Date());
 
   const handleUpdate = (e) => {
     e.preventDefault();
-    const updatedDate = e.target.date.value;
+    // const updatedDate = e.target.date.value;
 
-    if (date === updatedDate) {
-      errorAlert("Please select a new date before updating");
+    if (new Date(date).toLocaleDateString() === startDate.toLocaleDateString()) {
+      //   errorAlert("Please select a new date before updating");
+      document.getElementById(_id).close();
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Please select a new date before updating",
+      });
       return;
     }
 
     // update date
-    axiosSecure.patch(`/bookings/${_id}`, { date: updatedDate }).then((data) => {
+    axiosSecure.patch(`/bookings/${_id}`, { date: startDate }).then((data) => {
       console.log(data.data);
       if (data.data.modifiedCount) {
         successAlert("Date updated Successfully");
@@ -65,12 +75,15 @@ const BookingsTableRow = ({ myBooking, getData }) => {
     <tr className="text-xs sm:text-base">
       <td>{room_name}</td>
       <td>${price}</td>
-      <td>{date}</td>
+      <td>{new Date(date).toLocaleDateString()}</td>
       <td>
         <div>
           {/* update date btn */}
           <button
-            onClick={() => document.getElementById(_id).showModal()}
+            onClick={() => {
+              document.getElementById(_id).showModal();
+              setStartDate(new Date(date));
+            }}
             className="btn btn-circle min-w-0 w-auto h-auto min-h-0  px-2 md:px-3 py-2 md:py-3 text-xs sm:text-sm font-medium bg-[#4db2ec15] hover:bg-[#4db2ec15] hover:brightness-90 tooltip"
             data-tip="Update booking date"
           >
@@ -86,13 +99,24 @@ const BookingsTableRow = ({ myBooking, getData }) => {
                 </button>
               </form>
               <div className="card">
-                <div className="card-body pt-0">
+                <div className="card-body pt-4">
                   <form id={`update_date_form-${_id}`} onSubmit={handleUpdate} className="flex flex-col gap-4">
-                    <label htmlFor="date" className="font-semibold text-lg">
-                      Booking Date:
-                    </label>
-                    <div>
-                      <input required type="date" name="date" defaultValue={date} className="input input-bordered w-full" />
+                    <div className="flex flex-col gap-2">
+                      <label className="text-left font-semibold text-lg">Room Name:</label>
+                      <input readOnly type="text" defaultValue={room_name} className="input input-bordered w-full input-disabled text-black" />
+                    </div>
+
+                    <div className="flex flex-col gap-2">
+                      <label className="text-left font-semibold text-lg">Price:</label>
+                      <input readOnly type="text" defaultValue={"$" + price} className="input input-bordered w-full input-disabled text-black" />
+                    </div>
+
+                    <div className="flex flex-col gap-2">
+                      <label htmlFor="date" className="text-left font-semibold text-lg">
+                        Booking Date:
+                      </label>
+                      {/* <input required type="date" name="date" defaultValue={date} className="input input-bordered w-full" /> */}
+                      <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} className="input input-bordered w-full" />
                     </div>
 
                     <button className="btn bg-primary-color text-white hover:bg-black h-auto min-h-0 text-base rounded-md py-2 xl:px-7">Update</button>

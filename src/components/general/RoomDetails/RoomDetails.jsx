@@ -1,3 +1,6 @@
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import useAlert from "../../../hooks/useAlert";
@@ -9,12 +12,13 @@ const RoomDetails = () => {
   const [roomDetails, setRoomDetails] = useState([]);
   const [loader, setLoader] = useState(true);
   const axiosSecure = useAxiosSecure();
-  const [date, setDate] = useState("");
+  // const [date, setDate] = useState("");
   const { user } = useAuth();
   const { successAlert } = useAlert();
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
+  const [startDate, setStartDate] = useState(new Date());
   const getData = () => {
     setLoader(true);
     axiosSecure(`/room-details/${id}`).then((data) => {
@@ -34,8 +38,9 @@ const RoomDetails = () => {
       navigate("/login", { state: pathname });
       return;
     }
-    const selectedDate = e.target.date.value;
-    setDate(selectedDate);
+    // const selectedDate = e.target.date.value;
+    // setDate(startDate);
+    console.log(startDate);
     document.getElementById("my_modal_1").showModal();
   };
 
@@ -43,7 +48,7 @@ const RoomDetails = () => {
     const order = {
       customerName: user?.displayName,
       email: user?.email,
-      date,
+      date: startDate,
       room_image,
       room_name,
       room_id: id,
@@ -106,7 +111,7 @@ const RoomDetails = () => {
                 {availability ? (
                   <form onSubmit={handleConfirmBooking} className="flex items-center gap-4">
                     <div>
-                      <input required type="date" name="date" className="input input-bordered w-full" />
+                      <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} className="input input-bordered w-full" />
                     </div>
 
                     <button className="btn bg-primary-color text-white hover:bg-black h-auto min-h-0 text-base rounded-md py-2 xl:px-7">Book Now</button>
@@ -130,7 +135,7 @@ const RoomDetails = () => {
                           <span className="font-semibold text-lg">Price:</span> ${price_per_night}
                         </li>
                         <li>
-                          <span className="font-semibold text-lg">Booked Date:</span> {date}
+                          <span className="font-semibold text-lg">Booked Date:</span> {startDate.toLocaleDateString()}
                         </li>
                       </ul>
                     </div>
