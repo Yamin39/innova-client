@@ -9,11 +9,16 @@ const MyBookings = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
 
-  useEffect(() => {
+  const getData = () => {
+    setLoader(true);
     axiosSecure.get(`/bookings?email=${user.email}`).then((data) => {
       setMyBookings(data?.data);
       setLoader(false);
     });
+  };
+
+  useEffect(() => {
+    getData();
   }, []);
   return (
     <div className="pb-24">
@@ -49,7 +54,7 @@ const MyBookings = () => {
                 ) : (
                   <tbody>
                     {myBookings.map((myBooking) => (
-                      <BookingsTableRow key={myBooking._id} myBooking={myBooking}></BookingsTableRow>
+                      <BookingsTableRow key={myBooking._id} myBooking={myBooking} getData={getData}></BookingsTableRow>
                     ))}
                   </tbody>
                 )}
