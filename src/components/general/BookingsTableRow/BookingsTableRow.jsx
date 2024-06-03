@@ -42,34 +42,53 @@ const BookingsTableRow = ({ myBooking, getData }) => {
 
   // delete booking
   const handleDelete = () => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "The booking will be canceled permanently and cannot be reverted!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, confirm!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        axiosSecure.delete(`/bookings/${_id}`).then((data) => {
-          console.log(data.data);
-          if (data.data.deletedCount > 0) {
-            axiosSecure.patch(`/rooms/${room_id}`, { availability: true }).then((data) => {
-              console.log(data.data);
-              if (data.data.modifiedCount) {
-                Swal.fire({
-                  title: "Canceled!",
-                  text: "Booking canceled successfully.",
-                  icon: "success",
-                });
-                getData();
-              }
-            });
-          }
-        });
-      }
-    });
+    // Calculate the cancellation deadline
+    const deadline = new Date(date);
+    console.log(deadline);
+    deadline.setDate(deadline.getDate() - 1);
+    console.log(deadline);
+
+    // Compare the current date with the cancellation deadline
+    if (startDate < deadline) {
+      console.log("cancelable.");
+
+      Swal.fire({
+        title: "Are you sure?",
+        text: "The booking will be canceled permanently and cannot be reverted!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, confirm!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          axiosSecure.delete(`/bookings/${_id}`).then((data) => {
+            console.log(data.data);
+            if (data.data.deletedCount > 0) {
+              axiosSecure.patch(`/rooms/${room_id}`, { availability: true }).then((data) => {
+                console.log(data.data);
+                if (data.data.modifiedCount) {
+                  Swal.fire({
+                    title: "Canceled!",
+                    text: "Booking canceled successfully.",
+                    icon: "success",
+                  });
+                  getData();
+                }
+              });
+            }
+          });
+        }
+      });
+    } else {
+      console.log("cannot cancel");
+
+      Swal.fire({
+        icon: "warning",
+        title: "Oops...",
+        text: "The booking cancelation is only allowed 1 day before the booked date.",
+      });
+    }
   };
   return (
     <tr className="text-xs sm:text-base">
