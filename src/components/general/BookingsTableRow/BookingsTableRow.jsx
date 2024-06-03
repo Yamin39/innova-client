@@ -1,3 +1,4 @@
+import moment from "moment";
 import PropTypes from "prop-types";
 import { useState } from "react";
 import DatePicker from "react-datepicker";
@@ -42,14 +43,11 @@ const BookingsTableRow = ({ myBooking, getData }) => {
 
   // delete booking
   const handleDelete = () => {
-    // Calculate the cancellation deadline
-    const deadline = new Date(date);
-    console.log(deadline);
-    deadline.setDate(deadline.getDate() - 1);
-    console.log(deadline);
+    const bookedDate = moment(date);
+    const currentDate = moment();
+    const deadline = bookedDate.clone().subtract(1, "days");
 
-    // Compare the current date with the cancellation deadline
-    if (startDate < deadline) {
+    if (currentDate.isBefore(deadline, "day")) {
       console.log("cancelable.");
 
       Swal.fire({
