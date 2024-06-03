@@ -1,11 +1,13 @@
 import PropTypes from "prop-types";
+import { FaRegTrashAlt } from "react-icons/fa";
 import { FaRegStar } from "react-icons/fa6";
 import { MdOutlineEditCalendar } from "react-icons/md";
+import Swal from "sweetalert2";
 import useAlert from "../../../hooks/useAlert";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const BookingsTableRow = ({ myBooking, getData }) => {
-  const { _id, room_name, price, date } = myBooking;
+  const { _id, room_id, room_name, price, date } = myBooking;
   const axiosSecure = useAxiosSecure();
   const { successAlert, errorAlert } = useAlert();
 
@@ -18,11 +20,44 @@ const BookingsTableRow = ({ myBooking, getData }) => {
       return;
     }
 
+    // update date
     axiosSecure.patch(`/bookings/${_id}`, { date: updatedDate }).then((data) => {
       console.log(data.data);
       if (data.data.modifiedCount) {
         successAlert("Date updated Successfully");
         getData();
+      }
+    });
+  };
+
+  // delete booking
+  const handleDelete = () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "The booking will be canceled permanently and cannot be reverted!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, confirm!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure.delete(`/bookings/${_id}`).then((data) => {
+          console.log(data.data);
+          if (data.data.deletedCount > 0) {
+            axiosSecure.patch(`/rooms/${room_id}`, { availability: true }).then((data) => {
+              console.log(data.data);
+              if (data.data.modifiedCount) {
+                Swal.fire({
+                  title: "Canceled!",
+                  text: "Booking canceled successfully.",
+                  icon: "success",
+                });
+                getData();
+              }
+            });
+          }
+        });
       }
     });
   };
@@ -39,7 +74,7 @@ const BookingsTableRow = ({ myBooking, getData }) => {
             className="btn btn-circle min-w-0 w-auto h-auto min-h-0  px-2 md:px-3 py-2 md:py-3 text-xs sm:text-sm font-medium bg-[#4db2ec15] hover:bg-[#4db2ec15] hover:brightness-90 tooltip"
             data-tip="Update booking date"
           >
-            <MdOutlineEditCalendar className="text-sm md:text-xl" />
+            <MdOutlineEditCalendar className="text-sm md:text-xl text-[#00a2ff]" />
           </button>
 
           {/* update date modal */}
@@ -69,15 +104,23 @@ const BookingsTableRow = ({ myBooking, getData }) => {
         </div>
       </td>
       <td>
+        {/* review btn */}
         <button
           className="btn btn-circle min-w-0 w-auto h-auto min-h-0  px-2 md:px-3 py-2 md:py-3 text-xs sm:text-sm font-medium bg-[#52ec4d15] hover:bg-[#52ec4d15] hover:brightness-90 tooltip"
           data-tip="Give a review"
         >
-          <FaRegStar className="text-sm md:text-xl" />
+          <FaRegStar className="text-sm md:text-xl text-[#0cb306]" />
         </button>
       </td>
       <td>
-        <button className="btn h-auto min-h-0 btn-error px-2 md:px-5 py-2 md:py-3 rounded text-xs sm:text-sm font-medium text-white">Cancel</button>
+        {/* delete button */}
+        <button
+          onClick={handleDelete}
+          className="btn btn-circle min-w-0 w-auto h-auto min-h-0  px-2 md:px-3 py-2 md:py-3 text-xs sm:text-sm font-medium bg-[#ec524d10] hover:bg-[#ec524d15] hover:brightness-90"
+          title="Cancel this booking"
+        >
+          <FaRegTrashAlt className="text-sm md:text-xl text-[#ff3f39]" />
+        </button>
       </td>
     </tr>
   );
