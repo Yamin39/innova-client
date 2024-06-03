@@ -3,8 +3,10 @@ import RoomDetails from "../components/general/RoomDetails/RoomDetails";
 import Root from "../layout/Root";
 import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
+import MyBookings from "../pages/MyBookings/MyBookings";
 import Register from "../pages/Register/Register";
 import Rooms from "../pages/Rooms/Rooms";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +32,14 @@ const router = createBrowserRouter([
       {
         path: "/room-details/:id",
         element: <RoomDetails></RoomDetails>,
+      },
+      {
+        path: "/my-bookings",
+        element: (
+          <PrivateRoute>
+            <MyBookings></MyBookings>
+          </PrivateRoute>
+        ),
       },
     ],
   },

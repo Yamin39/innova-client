@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
 import { FcGoogle } from "react-icons/fc";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import loginImg from "../../assets/images/login.jpg";
 import useAlert from "../../hooks/useAlert";
 import useAuth from "../../hooks/useAuth";
@@ -11,6 +11,7 @@ const Login = () => {
   const { successAlert, errorAlert } = useAlert();
   const { logIn, googleLogin } = useAuth();
   const navigate = useNavigate();
+  const { state } = useLocation();
 
   // google login
   const handleGoogleLogin = () => {
@@ -18,7 +19,7 @@ const Login = () => {
       .then((res) => {
         console.log(res.user);
         successAlert("Login Successful");
-        navigate("/");
+        navigate(state || "/");
       })
       .catch((err) => console.log(err));
   };
@@ -47,7 +48,7 @@ const Login = () => {
       .then((res) => {
         console.log(res.user);
         successAlert("Login Successful");
-        navigate("/");
+        navigate(state || "/");
       })
       .catch((err) => {
         console.error(err);

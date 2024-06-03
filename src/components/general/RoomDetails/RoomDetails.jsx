@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import useAlert from "../../../hooks/useAlert";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
@@ -12,6 +12,8 @@ const RoomDetails = () => {
   const [date, setDate] = useState("");
   const { user } = useAuth();
   const { successAlert } = useAlert();
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   const getData = () => {
     setLoader(true);
@@ -28,6 +30,10 @@ const RoomDetails = () => {
   const { room_name, room_description, price_per_night, room_size, availability, room_image, special_offers, reviews } = roomDetails;
   const handleConfirmBooking = (e) => {
     e.preventDefault();
+    if (!user) {
+      navigate("/login", { state: pathname });
+      return;
+    }
     const selectedDate = e.target.date.value;
     setDate(selectedDate);
     document.getElementById("my_modal_1").showModal();
@@ -35,8 +41,8 @@ const RoomDetails = () => {
 
   const handleBooking = () => {
     const order = {
-      customerName: user.displayName,
-      email: user.email,
+      customerName: user?.displayName,
+      email: user?.email,
       date,
       room_image,
       room_name,
