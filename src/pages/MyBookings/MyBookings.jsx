@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { GiRoundStar } from "react-icons/gi";
-import { MdOutlineEditCalendar } from "react-icons/md";
+import BookingsTableRow from "../../components/general/BookingsTableRow/BookingsTableRow";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 
@@ -50,32 +49,7 @@ const MyBookings = () => {
                 ) : (
                   <tbody>
                     {myBookings.map((myBooking) => (
-                      <tr key={myBooking._id} className="text-xs sm:text-base">
-                        <td>{myBooking.room_name}</td>
-                        <td>${myBooking.price}</td>
-                        <td>{myBooking.date}</td>
-                        <td>
-                          <button
-                            className="btn btn-circle min-w-0 w-auto h-auto min-h-0  px-2 md:px-3 py-2 md:py-3 text-xs sm:text-sm font-medium bg-[#4db2ec15] hover:bg-[#4db2ec15] hover:brightness-90 tooltip"
-                            data-tip="Update booking date"
-                          >
-                            <MdOutlineEditCalendar className="text-sm md:text-xl" />
-                          </button>
-                        </td>
-                        <td>
-                          <button
-                            className="btn btn-circle min-w-0 w-auto h-auto min-h-0  px-2 md:px-3 py-2 md:py-3 text-xs sm:text-sm font-medium bg-[#52ec4d15] hover:bg-[#52ec4d15] hover:brightness-90 tooltip"
-                            data-tip="Give a review"
-                          >
-                            <GiRoundStar className="text-sm md:text-xl" />
-                          </button>
-                        </td>
-                        <td>
-                          <button className="btn h-auto min-h-0 btn-error px-2 md:px-5 py-2 md:py-3 rounded text-xs sm:text-sm font-medium text-white">
-                            Cancel
-                          </button>
-                        </td>
-                      </tr>
+                      <BookingsTableRow key={myBooking._id} myBooking={myBooking}></BookingsTableRow>
                     ))}
                   </tbody>
                 )}
