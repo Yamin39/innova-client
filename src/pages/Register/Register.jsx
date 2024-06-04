@@ -77,7 +77,7 @@ const Register = () => {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row-reverse justify-evenly items-center">
+    <div className="flex flex-col lg:flex-row-reverse justify-evenly items-center mb-20">
       <div className="hidden md:block max-w-[45%] min-w-[20.5rem]">
         <img className="w-full" src={registerImg} />
       </div>

@@ -72,7 +72,7 @@ const Login = () => {
       });
   };
   return (
-    <div className="flex flex-col lg:flex-row justify-evenly items-center">
+    <div className="flex flex-col lg:flex-row justify-evenly items-center mb-20">
       <div className="hidden md:block max-w-[40%] min-w-[20.5rem]">
         <img className="w-full" src={loginImg} />
       </div>
