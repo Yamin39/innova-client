@@ -4,6 +4,7 @@ import modalImg from "../../assets/images/modalImg.png";
 import Banner from "../../components/general/Banner/Banner";
 import FeaturedRooms from "../../components/general/FeaturedRooms/FeaturedRooms";
 import Location from "../../components/general/Location/Location";
+import Newsletter from "../../components/general/Newsletter/Newsletter";
 import SpecialOffers from "../../components/general/SpecialOffers/SpecialOffers";
 import Testimonials from "../../components/general/Testimonials/Testimonials";
 
@@ -21,6 +22,7 @@ const Home = () => {
       <SpecialOffers></SpecialOffers>
       <Testimonials></Testimonials>
       <Location></Location>
+      <Newsletter></Newsletter>
 
       <dialog id="offer_modal" className="modal">
         <div className="modal-box">
