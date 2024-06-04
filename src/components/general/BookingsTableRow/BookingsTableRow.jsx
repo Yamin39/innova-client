@@ -106,15 +106,20 @@ const BookingsTableRow = ({ myBooking, getData }) => {
     axiosSecure.patch(`/add-review/${room_id}`, review).then((data) => {
       console.log(data.data);
       if (data.data.modifiedCount) {
-        axiosSecure.patch(`/booking/${_id}`, { reviewGiven: true }).then((data) => {
-          console.log(data.data);
-          if (data.data.modifiedCount) {
-            Swal.fire({
-              title: "Success!",
-              text: "Review added successfully.",
-              icon: "success",
+        axiosSecure.post("/review", review).then((data) => {
+          console.log(data?.data);
+          if (data?.data?.insertedId) {
+            axiosSecure.patch(`/booking/${_id}`, { reviewGiven: true }).then((data) => {
+              console.log(data.data);
+              if (data.data.modifiedCount) {
+                Swal.fire({
+                  title: "Success!",
+                  text: "Review added successfully.",
+                  icon: "success",
+                });
+                getData();
+              }
             });
-            getData();
           }
         });
       }
