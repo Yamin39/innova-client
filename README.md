@@ -1,8 +1,20 @@
-# React + Vite
+# Innova
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to Innova
 
-Currently, two official plugins are available:
+## Live Site
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+live site URL: [Innova]()
+
+## Features
+
+Innova have many features. Such as,
+
+- User can Register and login to their account. They can also login with google.
+- Many types of rooms are available here.
+- Logged in users can book a room from room details page.
+- User can give a review after booking.
+- Authentic reviews are showcased in home section.
+- Users can update and delete their bookings.
+
+## Website Category's name is Hotel Booking Platform
