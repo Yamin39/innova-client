@@ -17,7 +17,7 @@ const ReviewCard = ({ review }) => {
       <br />
       <div className="flex gap-5 items-center">
         <div className="bg-slate-200 rounded-full">
-          <img className="size-8 2xl:size-10 rounded-full object-cover" src={userImg} alt="Reviewer" />
+          <img className="size-8 2xl:size-10 rounded-full object-cover" src={userImg} />
         </div>
         <div>
           <p className="font-semibold text-black text-lg">{userName}</p>
