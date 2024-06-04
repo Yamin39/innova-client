@@ -3,9 +3,9 @@ import "react-datepicker/dist/react-datepicker.css";
 
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import useAlert from "../../../hooks/useAlert";
-import useAuth from "../../../hooks/useAuth";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useAlert from "../../hooks/useAlert";
+import useAuth from "../../hooks/useAuth";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const RoomDetails = () => {
   const { id } = useParams();

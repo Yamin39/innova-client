@@ -1,10 +1,10 @@
 import { createBrowserRouter } from "react-router-dom";
-import RoomDetails from "../components/general/RoomDetails/RoomDetails";
 import Root from "../layout/Root";
 import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
 import MyBookings from "../pages/MyBookings/MyBookings";
 import Register from "../pages/Register/Register";
+import RoomDetails from "../pages/RoomDetails/RoomDetails";
 import Rooms from "../pages/Rooms/Rooms";
 import PrivateRoute from "./PrivateRoute";
 
