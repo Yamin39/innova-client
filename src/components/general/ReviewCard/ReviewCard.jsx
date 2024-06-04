@@ -13,7 +13,9 @@ const ReviewCard = ({ review }) => {
         </p>
       </div>
       <br />
-      <p className="text-gray-500">&quot;{comment}&quot;</p>
+      <p className="text-gray-500">
+        <q>{comment}</q>
+      </p>
       <br />
       <div className="flex gap-5 items-center">
         <div className="bg-slate-200 rounded-full">
