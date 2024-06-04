@@ -4,8 +4,18 @@
 @tailwind components;
 @tailwind utilities;
 
+.leaflet-container {
+  height: 37.5rem;
+  width: 100%;
+  border-radius: 1.25rem;
+}
+
 @media screen and (max-width: 640px) {
   html {
     font-size: 3.5vw;
+  }
+
+  .leaflet-container {
+    height: 30rem;
   }
 }
