@@ -1,10 +1,15 @@
 import Lottie from "lottie-react";
+import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import animation404 from "../../assets/animations/animation404.json";
 
 const ErrorPage = () => {
   return (
     <div className="min-h-screen flex flex-col md:flex-row gap-4 justify-center items-center font-dm-sans">
+      <Helmet>
+        <title>404 | Innova</title>
+        <meta name="description" content="Oops! Page not found" />
+      </Helmet>
       <div>
         <Lottie className="max-w-[24rem]" animationData={animation404} />
       </div>

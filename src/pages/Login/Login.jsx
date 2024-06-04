@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Helmet } from "react-helmet";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
 import { FcGoogle } from "react-icons/fc";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -73,6 +74,10 @@ const Login = () => {
   };
   return (
     <div className="flex flex-col lg:flex-row justify-evenly items-center mb-20">
+      <Helmet>
+        <title>Login | Innova</title>
+        <meta name="description" content="Access your account on our hotel booking website" />
+      </Helmet>
       <div className="hidden md:block max-w-[40%] min-w-[20.5rem]">
         <img className="w-full" src={loginImg} />
       </div>

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet";
 import RoomsCard from "../../components/general/RoomsCard/RoomsCard";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 
@@ -24,6 +25,10 @@ const Rooms = () => {
   };
   return (
     <div className="mb-24">
+      <Helmet>
+        <title>Room | Innova</title>
+        <meta name="description" content="Discover a wide range of hotel rooms available for booking." />
+      </Helmet>
       <div className="text-center mb-6">
         <h1 className="text-[3rem] sm:text-[3.45rem] lg:text-5xl font-bold mt-4">All Rooms</h1>
         <p className="sm:max-w-[25rem] mx-auto text-gray-500 mt-2">Discover a variety of rooms tailored to every need and preference.</p>

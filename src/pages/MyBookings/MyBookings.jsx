@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet";
 import BookingsTableRow from "../../components/general/BookingsTableRow/BookingsTableRow";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
@@ -22,6 +23,10 @@ const MyBookings = () => {
   }, []);
   return (
     <div className="min-h-[70vh]">
+      <Helmet>
+        <title>My Bookings | Innova</title>
+        <meta name="description" content="View and manage your hotel reservations effortlessly on our My Bookings page" />
+      </Helmet>
       <div className="text-center pb-14">
         <h1 className="text-[3rem] sm:text-[3.45rem] lg:text-5xl font-bold mt-4">My Bookings</h1>
 

@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import modalImg from "../../assets/images/modalImg.png";
 import Banner from "../../components/general/Banner/Banner";
@@ -17,6 +18,10 @@ const Home = () => {
   }, []);
   return (
     <div>
+      <Helmet>
+        <title>Home | Innova</title>
+        <meta name="description" content="Book your perfect stay with our hotel room booking website." />
+      </Helmet>
       <Banner></Banner>
       <FeaturedRooms></FeaturedRooms>
       <SpecialOffers></SpecialOffers>

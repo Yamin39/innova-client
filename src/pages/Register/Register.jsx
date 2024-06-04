@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Helmet } from "react-helmet";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
 import { Link, useNavigate } from "react-router-dom";
 import registerImg from "../../assets/images/register.jpeg";
@@ -78,6 +79,10 @@ const Register = () => {
 
   return (
     <div className="flex flex-col lg:flex-row-reverse justify-evenly items-center mb-20">
+      <Helmet>
+        <title>Register | Innova</title>
+        <meta name="description" content="Create your account on our hotel booking website" />
+      </Helmet>
       <div className="hidden md:block max-w-[45%] min-w-[20.5rem]">
         <img className="w-full" src={registerImg} />
       </div>

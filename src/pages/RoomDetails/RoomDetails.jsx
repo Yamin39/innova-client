@@ -2,6 +2,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import ReviewCard from "../../components/general/ReviewCard/ReviewCard";
 import useAlert from "../../hooks/useAlert";
@@ -74,6 +75,10 @@ const RoomDetails = () => {
   };
   return (
     <div className="pb-24">
+      <Helmet>
+        <title>Room Details | Innova</title>
+        <meta name="description" content="Explore detailed information and book your ideal hotel room." />
+      </Helmet>
       <div className="text-center pb-14">
         <h1 className="text-[3rem] sm:text-[3.45rem] lg:text-5xl font-bold mt-4">Room Details</h1>
       </div>
