@@ -1,10 +1,17 @@
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
-const RoomsCard = ({ room }) => {
+const RoomsCard = ({ room, idx }) => {
   const { _id, room_image, room_name, reviews, price_per_night, availability } = room;
   return (
-    <div className="rounded-md flex flex-col justify-between" style={{ boxShadow: "0px 0px 20px 8px rgba(59, 59, 59, 0.123)" }}>
+    <div
+      className="rounded-md flex flex-col justify-between"
+      style={{ boxShadow: "0px 0px 20px 8px rgba(59, 59, 59, 0.123)" }}
+      data-aos="fade-up"
+      data-aos-duration="600"
+      data-aos-delay={`${idx + 2}00`}
+      data-aos-once={true}
+    >
       <div className="w-full h-[14rem] sm:h-[18.75rem] md:h-[22vw] lg:h-[11rem] xl:h-[12.5rem] 2xl:h-[18.75rem] mt-4 px-4">
         <Link to={`/room-details/${_id}`}>
           <img className="size-full hover:brightness-75 duration-300 object-cover rounded-md" src={room_image} />
@@ -32,6 +39,7 @@ const RoomsCard = ({ room }) => {
 
 RoomsCard.propTypes = {
   room: PropTypes.object,
+  idx: PropTypes.number,
 };
 
 export default RoomsCard;

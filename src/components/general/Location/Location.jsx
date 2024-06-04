@@ -16,7 +16,7 @@ const Location = () => {
   const mapRef = useRef();
   return (
     <div className="my-12 md:my-24">
-      <div className="text-center mb-10">
+      <div className="text-center mb-10" data-aos="fade-up" data-aos-duration="600" data-aos-delay="100" data-aos-once={true}>
         <h1 className="text-[3rem] sm:text-[3.45rem] lg:text-5xl font-bold mt-4">Hotel&apos;s location</h1>
         <p className="sm:max-w-[25rem] mx-auto text-gray-500 mt-2">Find our hotel location in map</p>
       </div>

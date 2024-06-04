@@ -78,11 +78,11 @@ const Login = () => {
         <title>Login | Innova</title>
         <meta name="description" content="Access your account on our hotel booking website" />
       </Helmet>
-      <div className="hidden md:block max-w-[40%] min-w-[20.5rem]">
+      <div className="hidden md:block max-w-[40%] min-w-[20.5rem]" data-aos="fade-up" data-aos-duration="600" data-aos-delay="100" data-aos-once={true}>
         <img className="w-full" src={loginImg} />
       </div>
 
-      <div>
+      <div data-aos="fade-up" data-aos-duration="600" data-aos-delay="200" data-aos-once={true}>
         <form onSubmit={handleLogin} className="w-96">
           <div className="text-center mb-6">
             <h1 className="text-[3rem] sm:text-[3.45rem] lg:text-5xl font-bold mt-4">Login</h1>

@@ -2,10 +2,16 @@ import moment from "moment";
 import PropTypes from "prop-types";
 import { FaStar } from "react-icons/fa6";
 
-const ReviewCard = ({ review }) => {
+const ReviewCard = ({ review, idx }) => {
   const { ratings, comment, userName, userImg, timestamp } = review;
   return (
-    <div className="px-6 py-8 shadow-lg rounded-2xl duration-300 flex flex-col justify-between">
+    <div
+      className="px-6 py-8 shadow-lg rounded-2xl duration-300 flex flex-col justify-between"
+      data-aos="fade-up"
+      data-aos-duration="600"
+      data-aos-delay={`${idx + 2}00`}
+      data-aos-once={true}
+    >
       <div className="flex justify-end">
         <p className="flex items-center gap-2 bg-yellow-100/60 text-yellow-600 rounded-full px-6 py-2 font-medium">
           <FaStar />
@@ -36,6 +42,7 @@ const ReviewCard = ({ review }) => {
 
 ReviewCard.propTypes = {
   review: PropTypes.object,
+  idx: PropTypes.number,
 };
 
 export default ReviewCard;

@@ -29,12 +29,12 @@ const Rooms = () => {
         <title>Room | Innova</title>
         <meta name="description" content="Discover a wide range of hotel rooms available for booking." />
       </Helmet>
-      <div className="text-center mb-6">
+      <div className="text-center mb-6" data-aos="fade-up" data-aos-duration="600" data-aos-delay="100" data-aos-once={true}>
         <h1 className="text-[3rem] sm:text-[3.45rem] lg:text-5xl font-bold mt-4">All Rooms</h1>
         <p className="sm:max-w-[25rem] mx-auto text-gray-500 mt-2">Discover a variety of rooms tailored to every need and preference.</p>
       </div>
 
-      <div className="mt-4 text-center">
+      <div className="mt-4 text-center" data-aos="fade-up" data-aos-duration="600" data-aos-delay="200" data-aos-once={true}>
         <select onChange={handleFilter} name="price_range" className="select select-bordered">
           <option disabled selected>
             Filter by price range
@@ -53,8 +53,8 @@ const Rooms = () => {
           </div>
         ) : (
           <div className="grid gap-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-            {rooms.map((room) => (
-              <RoomsCard key={room._id} room={room}></RoomsCard>
+            {rooms.map((room, idx) => (
+              <RoomsCard key={room._id} idx={idx} room={room}></RoomsCard>
             ))}
           </div>
         )}

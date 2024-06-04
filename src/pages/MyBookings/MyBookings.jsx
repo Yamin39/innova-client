@@ -28,7 +28,15 @@ const MyBookings = () => {
         <meta name="description" content="View and manage your hotel reservations effortlessly on our My Bookings page" />
       </Helmet>
       <div className="text-center pb-14">
-        <h1 className="text-[3rem] sm:text-[3.45rem] lg:text-5xl font-bold mt-4">My Bookings</h1>
+        <h1
+          className="text-[3rem] sm:text-[3.45rem] lg:text-5xl font-bold mt-4"
+          data-aos="fade-up"
+          data-aos-duration="600"
+          data-aos-delay="100"
+          data-aos-once={true}
+        >
+          My Bookings
+        </h1>
 
         <div>
           <div className="mt-10">

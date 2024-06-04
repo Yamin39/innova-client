@@ -80,7 +80,15 @@ const RoomDetails = () => {
         <meta name="description" content="Explore detailed information and book your ideal hotel room." />
       </Helmet>
       <div className="text-center pb-14">
-        <h1 className="text-[3rem] sm:text-[3.45rem] lg:text-5xl font-bold mt-4">Room Details</h1>
+        <h1
+          className="text-[3rem] sm:text-[3.45rem] lg:text-5xl font-bold mt-4"
+          data-aos="fade-up"
+          data-aos-duration="600"
+          data-aos-delay="100"
+          data-aos-once={true}
+        >
+          Room Details
+        </h1>
       </div>
       {loader ? (
         <div className="flex justify-center">
@@ -89,7 +97,7 @@ const RoomDetails = () => {
       ) : (
         <div>
           <div className="flex flex-col-reverse lg:flex-row gap-10">
-            <div className="flex-1">
+            <div className="flex-1" data-aos="fade-up" data-aos-duration="600" data-aos-delay="200" data-aos-once={true}>
               <h2 className="text-3xl font-semibold">{room_name}</h2>
               <p className="text-2xl mt-2 font-medium">
                 ${price_per_night}/<span className="text-lg">night</span>
@@ -162,19 +170,27 @@ const RoomDetails = () => {
                 </div>
               </dialog>
             </div>
-            <div className="w-full lg:w-[52%] xl:flex-1">
+            <div className="w-full lg:w-[52%] xl:flex-1" data-aos="fade-up" data-aos-duration="600" data-aos-delay="200" data-aos-once={true}>
               <img className="rounded size-full object-cover" src={room_image} alt={room_name} />
             </div>
           </div>
 
           <div className="text-center pt-14 pb-6">
-            <h1 className="text-[3rem] sm:text-[3.45rem] lg:text-5xl font-bold">Reviews</h1>
+            <h1
+              className="text-[3rem] sm:text-[3.45rem] lg:text-5xl font-bold"
+              data-aos="fade-up"
+              data-aos-duration="600"
+              data-aos-delay="100"
+              data-aos-once={true}
+            >
+              Reviews
+            </h1>
           </div>
           <div>
             {reviews?.length ? (
               <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 pt-14">
-                {reviews.map((review, i) => (
-                  <ReviewCard key={i} review={review}></ReviewCard>
+                {reviews.map((review, idx) => (
+                  <ReviewCard key={idx} idx={idx} review={review}></ReviewCard>
                 ))}
               </div>
             ) : (
