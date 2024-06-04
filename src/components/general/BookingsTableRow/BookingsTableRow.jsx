@@ -98,6 +98,7 @@ const BookingsTableRow = ({ myBooking, getData }) => {
       ratings: e.target.ratings.value,
       comment: e.target.comment.value,
       timestamp: new Date(),
+      room_name,
       room_id,
       booking_id: _id,
     };
