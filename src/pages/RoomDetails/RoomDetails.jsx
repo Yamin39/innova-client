@@ -3,6 +3,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import ReviewCard from "../../components/general/ReviewCard/ReviewCard";
 import useAlert from "../../hooks/useAlert";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
@@ -164,7 +165,17 @@ const RoomDetails = () => {
           <div className="text-center pt-14 pb-6">
             <h1 className="text-[3rem] sm:text-[3.45rem] lg:text-5xl font-bold">Reviews</h1>
           </div>
-          <div>{reviews?.length ? <div>review</div> : <h4 className="text-2xl text-center font-semibold">This room has no reviews</h4>}</div>
+          <div>
+            {reviews?.length ? (
+              <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 pt-14">
+                {reviews.map((review, i) => (
+                  <ReviewCard key={i} review={review}></ReviewCard>
+                ))}
+              </div>
+            ) : (
+              <h4 className="text-2xl text-center font-semibold">This room has no reviews</h4>
+            )}
+          </div>
         </div>
       )}
     </div>
