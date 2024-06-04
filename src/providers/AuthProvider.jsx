@@ -10,6 +10,7 @@ import {
 import PropTypes from "prop-types";
 import { createContext, useEffect, useState } from "react";
 import auth from "../firebase/firebase.config";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 export const AuthContext = createContext(null);
 
@@ -17,6 +18,7 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [loader, setLoader] = useState(false);
+  const axiosSecure = useAxiosSecure();
 
   // register with email, pass
   const createUser = (email, password) => {
@@ -48,15 +50,6 @@ const AuthProvider = ({ children }) => {
     return signOut(auth);
   };
 
-  useEffect(() => {
-    const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
-      console.log("currently logged in user: ", currentUser);
-      setUser(currentUser);
-      setLoading(false);
-    });
-    return () => unSubscribe();
-  }, [loader]);
-
   const authInfo = {
     user,
     loading,
@@ -69,6 +62,20 @@ const AuthProvider = ({ children }) => {
     logIn,
     googleLogin,
   };
+
+  useEffect(() => {
+    const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
+      console.log("currently logged in user: ", currentUser);
+      setUser(currentUser);
+      if (!currentUser) {
+        axiosSecure.post("/logout", { email: currentUser?.email || user?.email }).then((res) => {
+          console.log(res.data);
+        });
+      }
+      setLoading(false);
+    });
+    return () => unSubscribe();
+  }, [loader]);
   return <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>;
 };
 

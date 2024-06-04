@@ -4,12 +4,14 @@ import { Link, useNavigate } from "react-router-dom";
 import registerImg from "../../assets/images/register.jpeg";
 import useAlert from "../../hooks/useAlert";
 import useAuth from "../../hooks/useAuth";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const Register = () => {
   const { createUser, updateUserNameImg, setLoading, loader, setLoader } = useAuth();
   const { successAlert, errorAlert } = useAlert();
   const navigate = useNavigate();
   const [passToggle, setPassToggle] = useState(false);
+  const axiosSecure = useAxiosSecure();
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -49,8 +51,13 @@ const Register = () => {
           .then((result) => {
             console.log(result);
             setLoader(!loader);
-            successAlert("Registration Successful");
-            navigate("/");
+            axiosSecure.post("/jwt", { email }).then((data) => {
+              console.log(data.data);
+              if (data.data.success) {
+                successAlert("Registration Successful");
+                navigate("/");
+              }
+            });
           })
           .catch((error) => {
             console.error(error);

@@ -5,6 +5,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import loginImg from "../../assets/images/login.jpg";
 import useAlert from "../../hooks/useAlert";
 import useAuth from "../../hooks/useAuth";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const Login = () => {
   const [passToggle, setPassToggle] = useState(false);
@@ -12,14 +13,20 @@ const Login = () => {
   const { logIn, googleLogin } = useAuth();
   const navigate = useNavigate();
   const { state } = useLocation();
+  const axiosSecure = useAxiosSecure();
 
   // google login
   const handleGoogleLogin = () => {
     googleLogin()
       .then((res) => {
         console.log(res.user);
-        successAlert("Login Successful");
-        navigate(state || "/");
+        axiosSecure.post("/jwt", { email: res.user.email }).then((data) => {
+          console.log(data.data);
+          if (data.data.success) {
+            successAlert("Login Successful");
+            navigate(state || "/");
+          }
+        });
       })
       .catch((err) => console.log(err));
   };
@@ -47,8 +54,13 @@ const Login = () => {
     logIn(email, password)
       .then((res) => {
         console.log(res.user);
-        successAlert("Login Successful");
-        navigate(state || "/");
+        axiosSecure.post("/jwt", { email }).then((data) => {
+          console.log(data.data);
+          if (data.data.success) {
+            successAlert("Login Successful");
+            navigate(state || "/");
+          }
+        });
       })
       .catch((err) => {
         console.error(err);
