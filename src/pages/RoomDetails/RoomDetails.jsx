@@ -97,7 +97,7 @@ const RoomDetails = () => {
       ) : (
         <div>
           <div className="flex flex-col-reverse lg:flex-row gap-10">
-            <div className="flex-1" data-aos="fade-up" data-aos-duration="600" data-aos-delay="200" data-aos-once={true}>
+            <div className="flex-1">
               <h2 className="text-3xl font-semibold">{room_name}</h2>
               <p className="text-2xl mt-2 font-medium">
                 ${price_per_night}/<span className="text-lg">night</span>
@@ -170,7 +170,7 @@ const RoomDetails = () => {
                 </div>
               </dialog>
             </div>
-            <div className="w-full lg:w-[52%] xl:flex-1" data-aos="fade-up" data-aos-duration="600" data-aos-delay="200" data-aos-once={true}>
+            <div className="w-full lg:w-[52%] xl:flex-1">
               <img className="rounded size-full object-cover" src={room_image} alt={room_name} />
             </div>
           </div>
