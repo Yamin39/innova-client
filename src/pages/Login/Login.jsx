@@ -20,9 +20,9 @@ const Login = () => {
   const handleGoogleLogin = () => {
     googleLogin()
       .then((res) => {
-        console.log(res.user);
+        // console.log(res.user);
         axiosSecure.post("/jwt", { email: res.user.email }).then((data) => {
-          console.log(data.data);
+          // console.log(data.data);
           if (data.data.success) {
             successAlert("Login Successful");
             navigate(state || "/");
@@ -53,10 +53,10 @@ const Login = () => {
 
     // login
     logIn(email, password)
-      .then((res) => {
-        console.log(res.user);
+      .then(() => {
+        // console.log(res.user);
         axiosSecure.post("/jwt", { email }).then((data) => {
-          console.log(data.data);
+          // console.log(data.data);
           if (data.data.success) {
             successAlert("Login Successful");
             navigate(state || "/");

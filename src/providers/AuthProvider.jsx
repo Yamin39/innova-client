@@ -65,7 +65,7 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
-      console.log("currently logged in user: ", currentUser);
+      // console.log("currently logged in user: ", currentUser);
       setUser(currentUser);
       if (!currentUser?.email) {
         axiosSecure.post("/logout", { email: currentUser?.email || user?.email }).then((res) => {

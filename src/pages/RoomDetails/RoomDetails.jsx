@@ -42,12 +42,12 @@ const RoomDetails = () => {
     }
     // const selectedDate = e.target.date.value;
     // setDate(startDate);
-    console.log(startDate);
+    // console.log(startDate);
     document.getElementById("my_modal_1").showModal();
   };
 
   const handleBooking = () => {
-    const order = {
+    const bookingData = {
       customerName: user?.displayName,
       email: user?.email,
       date: startDate,
@@ -58,13 +58,13 @@ const RoomDetails = () => {
       reviewGiven: false,
     };
 
-    console.log(order);
+    // console.log(bookingData);
 
-    axiosSecure.post("/bookings", order).then((data) => {
-      console.log(data?.data);
+    axiosSecure.post("/bookings", bookingData).then((data) => {
+      // console.log(data?.data);
       if (data?.data?.insertedId) {
         axiosSecure.patch(`/rooms/${id}`, { availability: false }).then((data) => {
-          console.log(data.data);
+          // console.log(data.data);
           if (data.data.modifiedCount) {
             successAlert("Room Booked Successfully");
             getData();
@@ -176,15 +176,7 @@ const RoomDetails = () => {
           </div>
 
           <div className="text-center pt-14 pb-6">
-            <h1
-              className="text-[3rem] sm:text-[3.45rem] lg:text-5xl font-bold"
-              data-aos="fade-up"
-              data-aos-duration="600"
-              data-aos-delay="100"
-              data-aos-once={true}
-            >
-              Reviews
-            </h1>
+            <h1 className="text-[3rem] sm:text-[3.45rem] lg:text-5xl font-bold">Reviews</h1>
           </div>
           <div>
             {reviews?.length ? (

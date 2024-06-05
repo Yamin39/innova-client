@@ -47,13 +47,13 @@ const Register = () => {
     // register
     createUser(email, password)
       .then((res) => {
-        console.log(res.user);
+        // console.log(res.user);
         updateUserNameImg(res.user, name, photoUrl)
-          .then((result) => {
-            console.log(result);
+          .then(() => {
+            // console.log(result);
             setLoader(!loader);
             axiosSecure.post("/jwt", { email }).then((data) => {
-              console.log(data.data);
+              // console.log(data.data);
               if (data.data.success) {
                 successAlert("Registration Successful");
                 navigate("/");
@@ -61,13 +61,13 @@ const Register = () => {
             });
           })
           .catch((error) => {
-            console.error(error);
+            // console.log(error);
             errorAlert(error.message);
           });
       })
       .catch((err) => {
         const error = err.message;
-        console.error(error);
+        // console.log(error);
         if (/email-already-in-use/.test(error)) {
           errorAlert("Email already in use");
         } else {

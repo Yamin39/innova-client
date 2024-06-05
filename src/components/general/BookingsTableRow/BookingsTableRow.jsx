@@ -33,7 +33,7 @@ const BookingsTableRow = ({ myBooking, getData }) => {
 
     // update date
     axiosSecure.patch(`/bookings/${_id}`, { date: startDate }).then((data) => {
-      console.log(data.data);
+      // console.log(data.data);
       if (data.data.modifiedCount) {
         successAlert("Date updated Successfully");
         getData();
@@ -48,7 +48,7 @@ const BookingsTableRow = ({ myBooking, getData }) => {
     const deadline = bookedDate.clone().subtract(1, "days");
 
     if (currentDate.isBefore(deadline, "day")) {
-      console.log("cancelable.");
+      // console.log("cancelable.");
 
       Swal.fire({
         title: "Are you sure?",
@@ -61,10 +61,10 @@ const BookingsTableRow = ({ myBooking, getData }) => {
       }).then((result) => {
         if (result.isConfirmed) {
           axiosSecure.delete(`/bookings/${_id}`).then((data) => {
-            console.log(data.data);
+            // console.log(data.data);
             if (data.data.deletedCount > 0) {
               axiosSecure.patch(`/rooms/${room_id}`, { availability: true }).then((data) => {
-                console.log(data.data);
+                // console.log(data.data);
                 if (data.data.modifiedCount) {
                   Swal.fire({
                     title: "Canceled!",
@@ -79,7 +79,7 @@ const BookingsTableRow = ({ myBooking, getData }) => {
         }
       });
     } else {
-      console.log("cannot cancel");
+      // console.log("cannot cancel");
 
       Swal.fire({
         icon: "warning",
@@ -102,16 +102,16 @@ const BookingsTableRow = ({ myBooking, getData }) => {
       room_id,
       booking_id: _id,
     };
-    console.log(review);
+    // console.log(review);
 
     axiosSecure.patch(`/add-review/${room_id}`, review).then((data) => {
-      console.log(data.data);
+      // console.log(data.data);
       if (data.data.modifiedCount) {
         axiosSecure.post("/review", review).then((data) => {
-          console.log(data?.data);
+          // console.log(data?.data);
           if (data?.data?.insertedId) {
             axiosSecure.patch(`/booking/${_id}`, { reviewGiven: true }).then((data) => {
-              console.log(data.data);
+              // console.log(data.data);
               if (data.data.modifiedCount) {
                 Swal.fire({
                   title: "Success!",
