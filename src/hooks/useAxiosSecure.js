@@ -5,7 +5,7 @@ import auth from "../firebase/firebase.config";
 import useAlert from "./useAlert";
 
 const axiosSecure = axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL: "https://innova-server.vercel.app",
   withCredentials: true,
 });
 
