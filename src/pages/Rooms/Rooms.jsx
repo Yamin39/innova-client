@@ -1,18 +1,26 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Helmet } from "react-helmet";
+import { FiSearch } from "react-icons/fi";
+import { RiDeleteBin2Line } from "react-icons/ri";
 import RoomsCard from "../../components/general/RoomsCard/RoomsCard";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const Rooms = () => {
   const [rooms, setRooms] = useState([]);
   const [loader, setLoader] = useState(true);
+  const [search, setSearch] = useState("");
   const axiosSecure = useAxiosSecure();
+  const searchFormRef = useRef();
 
-  useEffect(() => {
-    axiosSecure.get("/rooms").then((data) => {
+  const getRooms = (search) => {
+    setLoader(true);
+    axiosSecure.get(`/rooms?search=${search}`).then((data) => {
       setRooms(data?.data);
       setLoader(false);
     });
+  };
+  useEffect(() => {
+    getRooms();
   }, []);
 
   const handleFilter = (e) => {
@@ -22,6 +30,13 @@ const Rooms = () => {
       setRooms(data.data);
       setLoader(false);
     });
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    const searchText = e.target.search_box.value;
+    setSearch(searchText);
+    getRooms(searchText);
   };
   return (
     <div className="mb-24">
@@ -46,11 +61,45 @@ const Rooms = () => {
         </select>
       </div>
 
+      <div className="flex justify-center items-center gap-4 my-9">
+        <form ref={searchFormRef} onSubmit={handleSearch}>
+          <div className="input items-center input-bordered flex justify-center rounded-full shadow-inner text-black pr-1">
+            <input list="search_suggestions" name="search_box" type="text" placeholder="Search..." required />
+            <div className="p-1">
+              <button className="btn btn-circle btn-sm bg-primary-color hover:bg-primary-color hover:brightness-90 text-white">
+                <FiSearch className="text-lg" />
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <datalist id="search_suggestions">
+          {rooms.slice(0, 4).map((room, idx) => (
+            <option key={idx} value={room.room_name}></option>
+          ))}
+        </datalist>
+
+        {search && (
+          <button
+            className="btn btn-circle btn-error min-h-0 size-9  text-white"
+            onClick={() => {
+              getRooms();
+              setSearch("");
+              searchFormRef.current.reset();
+            }}
+          >
+            <RiDeleteBin2Line className="text-lg" />
+          </button>
+        )}
+      </div>
+
       <div className="pt-10">
         {loader ? (
           <div className="flex justify-center">
             <span className="loading loading-spinner loading-lg"></span>
           </div>
+        ) : rooms.length === 0 ? (
+          <h2 className="text-2xl text-center font-semibold text-red-600">No Rooms Found!</h2>
         ) : (
           <div className="grid gap-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {rooms.map((room, idx) => (
