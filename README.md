@@ -1,4 +1,4 @@
-# Innova Client
+# Innova
 
 ## Links
 [Live site link](https://innova-yamin39.web.app/)
