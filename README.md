@@ -1,20 +1,50 @@
-# Innova
+# Innova Client
 
-Welcome to Innova
+## Links
+[Live site link](https://innova-yamin39.web.app/)
 
-## Live Site
+[Server side repo link](https://github.com/Yamin39/innova-server)
 
-live site URL: [Innova](https://innova-yamin39.web.app/)
+## Overview
 
-## Features
+- **Project Concept**: Innova is a hotel booking platform allowing users to register, log in, and book rooms. Users can also leave reviews and manage their bookings.
+- **Problem Solved**: This project simplifies the process of booking hotel rooms and managing reservations, ensuring a seamless experience for travelers.
+- **Technologies Used**: HTML, CSS, JavaScript, ReactJS, Firebase, Tailwind CSS, Daisy UI.
+- **Best Features**:
+  - User authentication with Email-Password and Google login options.
+  - Users can browse and book various types of rooms.
+  - Users can leave reviews, which are showcased on the home page.
 
-Innova have many features. Such as,
+## Setup Process
 
-- User can Register and login to their account. They can also login with google.
-- Many types of rooms are available here.
-- Logged in users can book a room from room details page.
-- User can give a review after booking.
-- Authentic reviews are showcased in home section.
-- Users can update and delete their bookings.
+To run the project locally, follow these steps:
 
-## Website Category's name is Hotel Booking Platform
+1. **Clone the repository**:
+```bash
+git clone https://github.com/Yamin39/innova-client.git
+```
+
+2. **Navigate to the project directory**:
+```bash
+cd innova-client
+```
+
+3. **Install dependencies**:
+```bash
+npm install
+```
+
+4. **Set up Firebase credentials**: Create a .env.local file and add your Firebase credentials
+```javascript
+VITE_APIKEY=yourAPIKEY
+VITE_AUTHDOMAIN=yourAUTHDOMAIN
+VITE_PROJECTID=yourPROJECTID
+VITE_STORAGEBUCKET=yourSTORAGEBUCKET
+VITE_MESSAGINGSENDERID=yourMESSAGINGSENDERID
+VITE_APPID=yourAPPID
+```
+
+5. **Run the project**:
+```bash
+npm run dev
+```
