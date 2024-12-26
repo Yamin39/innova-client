@@ -11,9 +11,21 @@
 - **Problem Solved**: This project simplifies the process of booking hotel rooms and managing reservations, ensuring a seamless experience for travelers.
 - **Technologies Used**: HTML, CSS, JavaScript, ReactJS, Firebase, Tailwind CSS, Daisy UI.
 - **Best Features**:
-  - User authentication with Email-Password and Google login options.
-  - Users can browse and book various types of rooms.
-  - Users can leave reviews, which are showcased on the home page.
+  - Users can browse and book various types of rooms.  
+  - Users can leave reviews, which are displayed on the home page.  
+  - Secure authentication for booking and review management.  
+- **Other Features**:
+  - Seamless reservation management for travelers.  
+  - Intuitive and user-friendly interface for booking experiences.  
+  - Efficient review system to showcase user feedback.
+
+## NPM Packages
+1. react-icons </br>  
+2. firebase </br>  
+3. react-router-dom </br>  
+4. tailwindcss </br>  
+5. daisyui </br>  
+6. react-hook-form </br> 
 
 ## Setup Process
 
